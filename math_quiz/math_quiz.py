@@ -1,23 +1,84 @@
 import random
 
 
-def function_A(min, max):
+def generate_arbitrary_integer(min_value, max_value):
     """
-    Random integer.
+    Generates a arbitrary integer within the specified range.
+
+    Parameters:
+    - min_value (int): Minimum value of the range.
+    - max_value (int): Maximum value of the range.
+
+    Returns:
+    - int or None: Random integer within the specified range, or None if an error occurs.
     """
-    return random.randint(min, max)
+    try:
+        # Check if both min_value and max_value are integers
+        if not isinstance(min_value, int) or not isinstance(max_value, int):
+            raise ValueError("Both min and max should be integers.")
+        
+        # Check if min_value is less than or equal to max_value
+        if min_value > max_value:
+            raise ValueError("min should be less than or equal to max.")
+
+        # Generate and return an arbitrary integer
+        return random.randint(min_value, max_value)
+    
+    except ValueError as e:
+        # Handle the error and print a meaningful message
+        print(f"Error: {e}")
+        return None
 
 
-def function_B():
-    return random.choice(['+', '-', '*'])
+def choose_arbitrary_operator():
+    """
+    Returns an arbitrary chosen mathematical operator from the list ['+', '-', '*'].
 
+    Returns:
+    - str: Arbitrary chosen operator.
+    """
+    try:
+        # Return an arbitrary operator from the list
+        return random.choice(['+', '-', '*'])
+    
+    except IndexError:
+        # Handle the error if the list is empty
+        print("Error: The list of operators is empty.")
+        return None
 
-def function_C(n1, n2, o):
-    p = f"{n1} {o} {n2}"
-    if o == '+': a = n1 - n2
-    elif o == '-': a = n1 + n2
-    else: a = n1 * n2
-    return p, a
+# Example usage:
+selected_operator = choose_arbitrary_operator()
+print(f"Selected Operator: {selected_operator}")
+    
+
+def perform_operation(number1, number2, operator):
+    """
+    Performs a mathematical operation on two numbers.
+
+    Parameters:
+    - number1 (float): The first number.
+    - number2 (float): The second number.
+    - operator (str): Mathematical operator ('+', '-', '*').
+
+    Returns:
+    - tuple or None: A tuple with a string representation of the operation and the result,
+                    or None if an error occurs.
+    """
+    try:
+        # Perform the operation based on the operator
+        if operator in {'+', '-', '*'}:
+            result = eval(f"{number1} {operator} {number2}")
+        else:
+            raise ValueError("Invalid operator. Supported operators are '+', '-', '*'.")
+
+        # Return a tuple with the operation string and the result
+        return f"{number1} {operator} {number2}", result
+
+    except Exception as e:
+        # Handle any unexpected errors and print a meaningful message
+        print(f"Error: {e}")
+        return None
+
 
 def math_quiz():
     s = 0
